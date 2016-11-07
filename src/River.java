@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 
 public class River {
@@ -79,7 +80,13 @@ public class River {
 		this.tc = tc;
 	}
 	
-	
+	/**
+	 * 此函数是判断玩家坦克是否与之相交
+	 * @return
+	 */
+	public Rectangle getRect(){
+		return new Rectangle(x,y,RIVER_WIDTH,RIVER_HEIGHT);
+	}
 	
 	
 }
