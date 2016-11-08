@@ -66,6 +66,7 @@ public class Tank {
 			if(!good){
 				//直接从TankClient移除
 //============================代码还没实现
+				
 			}
 		}
 		
@@ -230,6 +231,22 @@ public class Tank {
 	}
 	
 	/**
+	 * 坦克开火函数
+	 * @return
+	 */
+	public Bullets fire(){
+		if(!this.live)
+			return null;
+		else{
+			int x = (this.x + TANK_WIDTH)/2;
+			int y = (this.y + TANK_HEIGHT)/2;
+			Bullets m = new Bullets(x, y+2, kDirection, tc, good);
+			tc.bullets.add(m);
+			return m;
+		}
+	}
+	
+	/**
 	 * @topic	撞墙(河流，墙)逻辑处理
 	 * @param r
 	 * @return
@@ -262,7 +279,6 @@ public class Tank {
 	}
 	
 	//撞到家
-	//=================逻辑待处理
 	public boolean collideHome(Home r){
 		if(this.live && this.getRect().intersects(r.getRect())){
 			changeToOldDir();
@@ -272,7 +288,6 @@ public class Tank {
 	}
 	
 	//撞到Tank
-	//=================逻辑待处理
 	public boolean colldeTank(List<Tank> tanks){
 		for(int i=0;i<tanks.size();i++){
 			Tank t = tanks.get(i);
@@ -285,6 +300,20 @@ public class Tank {
 			}
 		}
 		
+		return false;
+	}
+	
+	//吃到血包
+	public boolean eat(GetBlood blood){
+		if(this.live && blood.isLive() && this.getRect().intersects(blood.getRect())){
+			if(this.life <100){
+				life += 100; //吃一个血包涨100生命值
+			}else{
+				life = 200;
+			}
+			blood.setLive(false);
+			return true;
+		}
 		return false;
 	}
 	
